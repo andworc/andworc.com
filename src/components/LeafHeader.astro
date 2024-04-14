@@ -1,0 +1,68 @@
+---
+import { Image } from "astro:assets";
+import AwWordmark from "@svgs/AwWordmark.astro";
+
+export interface Props {
+  title: string;
+  cover?: {
+    image: ImageMetadata;
+    alt: string;
+  };
+}
+const { title, cover } = Astro.props;
+
+const navItems = [
+  { name: "About", href: "/about" },
+  // { name: "Work", href: "/work" },
+  { name: "Blog", href: "/blog" },
+];
+
+const { pathname } = Astro.url;
+const subpath = pathname.match(/[^\/]+/g);
+---
+
+<section class="">
+  {
+    cover && (
+      <Image
+        loading="eager"
+        class="mb-4 aspect-[4/3] w-full rounded object-cover object-center sm:aspect-[3/2] md:aspect-[2/1]"
+        src={cover.image}
+        alt={cover.alt}
+      />
+    )
+  }
+  <div>
+    <div class="w-40">
+      <a href="/" class="text-accent" aria-label="Home"><AwWordmark /></a>
+    </div>
+    <h1 class="">{title}</h1>
+  </div>
+</section>
+
+<hr class="mx-auto mt-8 max-w-screen-xl" />
+
+<section class="sticky top-0 mb-12 bg-amber-50">
+  <nav class="max-w-full">
+    <ul class="flex flex-wrap gap-x-4 gap-y-2 pb-2 pt-6 sm:gap-x-6 md:gap-x-8">
+      {
+        navItems.map((item) => {
+          const isActive =
+            item.href === pathname || item.href === "/" + subpath?.[0];
+          return (
+            <li>
+              <a
+                class="uppercase underline-offset-2 hover:underline
+                data-[active]:underline"
+                data-active={isActive}
+                href={item.href}
+              >
+                {item.name}
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </nav>
+</section>

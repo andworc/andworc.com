@@ -1,0 +1,44 @@
+<!-- ---
+import { type CollectionEntry, getCollection } from "astro:content";
+import BlogPost from "@layouts/BlogPost.astro";
+import FormattedDate from "@components/FormattedDate.astro";
+import Ground from "@layouts/Ground.astro";
+import BlogList from "@components/BlogList.astro";
+
+export async function getStaticPaths() {
+  const works = await getCollection("work");
+  return works.map((work) => ({
+    params: { slug: work.slug },
+    props: work,
+  }));
+}
+type Props = CollectionEntry<"work">;
+
+const work = Astro.props;
+const { Content } = await work.render();
+
+const { title, description, release, cover } = work.data;
+
+const pertainingArticles = (
+  await getCollection("blog", ({ data }) => {
+    return data.relatedWork?.slug === work.slug;
+  })
+).sort((b, a) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf());
+---
+
+<Ground title={title} description={description} cover={cover} }>
+  <section>
+    <article class="prose prose-xl prose-stone mx-auto">
+      <div class="">
+        {release !== undefined && <FormattedDate date={release!} />}
+      </div>
+
+      <Content />
+    </article>
+  </section>
+
+  <section>
+    <h2 class="mb-16 mt-24">Pertaining articles</h2>
+    <BlogList collection={pertainingArticles} />
+  </section>
+</Ground> -->

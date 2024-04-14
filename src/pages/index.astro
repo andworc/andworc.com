@@ -1,0 +1,27 @@
+---
+import Ground from "@layouts/Ground.astro";
+import { SITE_DESCRIPTION } from "consts.astro";
+
+import coverImage from "@assets/landing-cover.svg";
+import Contact from "@components/Contact.astro";
+
+import { getCollection } from "astro:content";
+import BlogList from "@components/BlogList.astro";
+
+const posts = (await getCollection("blog")).sort(
+  (b, a) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
+);
+---
+
+<Ground
+  title="Home"
+  description={SITE_DESCRIPTION}
+  heading="A game development house reviving traditions within a modern craft."
+  cover={{ image: coverImage, alt: "Andworc logo" }}
+>
+  <BlogList collection={posts} range={[0, 4]} />
+
+  <Contact />
+
+  <BlogList collection={posts} range={[4]} />
+</Ground>

@@ -1,0 +1,15 @@
+---
+import { SITE_DESCRIPTION } from "consts.astro";
+import { getCollection } from "astro:content";
+import Ground from "@layouts/Ground.astro";
+
+import BlogList from "@components/BlogList.astro";
+
+const posts = (await getCollection("blog")).sort(
+  (b, a) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
+);
+---
+
+<Ground title="Blog" description={SITE_DESCRIPTION}>
+  <BlogList collection={posts} />
+</Ground>

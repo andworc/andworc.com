@@ -1,0 +1,47 @@
+---
+import FormattedDate from "@components/FormattedDate.astro";
+import { Image } from "astro:assets";
+
+import placeholderImage from "@assets/post-placeholder.jpg";
+import type { CollectionEntry } from "astro:content";
+
+export interface Props {
+  collection: CollectionEntry<"blog">[];
+  range?: number[];
+}
+
+const { collection, range = [0] } = Astro.props;
+---
+
+<section>
+  <ol class="grid gap-x-6 gap-y-12 md:grid-cols-2">
+    {
+      collection.slice(range[0], range[1] ?? undefined).map((post) => {
+        const cover = post.data.cover ?? {
+          image: placeholderImage,
+          alt: "A lovely green and blue gradient with brandmark in the centre",
+        };
+        return (
+          <li>
+            <article class="">
+              <a href={`/blog/${post.slug}/`}>
+                <Image
+                  class="mb-4 rounded"
+                  src={cover.image}
+                  alt={cover.alt}
+                  width={720}
+                  height={360}
+                />
+                <h2 class="mb-1 text-3xl md:text-4xl">{post.data.title}</h2>
+              </a>
+              <p class="mb-2 text-lg">
+                <FormattedDate date={post.data.pubDate} />
+              </p>
+              <p class="">{post.data.description}</p>
+            </article>
+          </li>
+        );
+      })
+    }
+  </ol>
+</section>

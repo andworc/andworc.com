@@ -1,0 +1,59 @@
+---
+import Envelope from "@icons/Envelope.astro";
+import EnvelopeOpen from "@icons/EnvelopeOpen.astro";
+import { socials } from "consts.astro";
+
+const emails = [
+  {
+    text: "hello@andworc.com",
+    href: "mailto:hello@andworc.com",
+  },
+  {
+    text: "business@andworc.com",
+    href: "mailto:business@andworc.com",
+  },
+];
+---
+
+<hr class="my-12" />
+<section>
+  <h2>Get in contact</h2>
+  <div class="flex flex-col justify-between gap-8 md:flex-row">
+    <div class="max-w-prose">
+      <p class="mb-4">
+        He hid under the covers hoping that nobody would notice him there. It
+        really didn't make much sense since it would be obvious to anyone who
+        walked into the room there was someone hiding there, but he still held
+        out hope.
+      </p>
+      <div class="flex gap-4">
+        {
+          socials.map((social) => (
+            <a href={social.link} target="_blank" class="hover:text-accent">
+              <social.icon />
+            </a>
+          ))
+        }
+      </div>
+    </div>
+    <div class="space-y-4 text-xl">
+      {
+        emails.map((email) => (
+          <div class="flex flex-row-reverse items-center justify-end gap-4">
+            <a href={email.href} class="peer">
+              {email.text}
+            </a>
+            <div class="block peer-hover:hidden">
+              <Envelope />
+            </div>
+            <div class="hidden peer-hover:block">
+              <EnvelopeOpen />
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<hr class="my-12" />

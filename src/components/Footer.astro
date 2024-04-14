@@ -1,0 +1,22 @@
+---
+const today = new Date();
+import { socials } from "consts.astro";
+---
+
+<footer class="mt-12 border-t border-accent">
+  <div class="mx-auto max-w-screen-xl space-y-4 pb-12 pt-8 text-center">
+    <p class="text-base">
+      &copy; {today.getFullYear()} Andworc. All rights reserved.
+    </p>
+
+    <div class="flex items-center justify-center gap-4">
+      {
+        socials.map((social) => (
+          <a href={social.link} target="_blank" class="hover:text-accent">
+            <social.icon />
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</footer>

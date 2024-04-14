@@ -1,0 +1,54 @@
+<!-- ---
+import { SITE_DESCRIPTION } from "consts.astro";
+import { getCollection } from "astro:content";
+import Ground from "@layouts/Ground.astro";
+import FormattedDate from "@components/FormattedDate.astro";
+import { Image } from "astro:assets";
+
+const works = (await getCollection("work")).sort(
+  (a, b) => a.data.priority.valueOf() - b.data.priority.valueOf()
+);
+---
+
+<Ground title="Work" description={SITE_DESCRIPTION}>
+  <section>
+    <ul class="grid grid-cols-1 gap-y-12">
+      {
+        works.map((work) => {
+          return (
+            <li>
+              <article class="">
+                <a href={`/work/${work.slug}/`}>
+                  <Image
+                    class="mb-12 aspect-[3/2] w-full rounded object-cover md:aspect-auto"
+                    src={work.data.cover.image}
+                    alt={work.data.cover.alt}
+                    width={920}
+                  />
+                  <div class="mb-6 flex flex-col items-baseline gap-4 md:mb-3 md:flex-row">
+                    <h2 class="mb-0 text-5xl md:text-6xl">{work.data.title}</h2>
+                    <p class="text-2xl italic opacity-80">
+                      {work.data.subtitle}
+                    </p>
+                  </div>
+                </a>
+                {work.data.release != undefined ?? (
+                  <p class="mb-2 text-lg">
+                    <FormattedDate date={work.data.release!} />
+                  </p>
+                )}
+                <p class="mb-4 ">{work.data.description}</p>
+                <a
+                  href={`/work/${work.slug}/`}
+                  class="underline-offset-4 hover:underline"
+                >
+                  Read on ->
+                </a>
+              </article>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </section>
+</Ground> -->

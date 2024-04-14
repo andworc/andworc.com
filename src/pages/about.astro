@@ -1,0 +1,21 @@
+---
+import Layout from "../layouts/BlogPost.astro";
+
+import coverImage from "@assets/post-placeholder.jpg";
+---
+
+<Layout
+  title="About Andworc"
+  description="A little about us and our endeavours"
+  pubDate={new Date("2024-04-14")}
+  cover={{
+    image: coverImage,
+    alt: "The Andworc logo on an abstract field of colours",
+  }}
+>
+  <p class="lead">
+    A game development house reviving our traditions within a modern craft.
+  </p>
+
+  <p>More soon!</p>
+</Layout>

@@ -1,0 +1,81 @@
+---
+import "../styles/global.css";
+import Footer from "../components/Footer.astro";
+import { SITE_TITLE } from "consts.astro";
+import LeafHeader from "@components/LeafHeader.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  heading?: string;
+  cover?: { image: ImageMetadata; alt: string };
+}
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+const image = "/blog-placeholder-1.jpg";
+const { title, description, cover, heading = title } = Astro.props;
+
+const fullTitle = `${title} | ${SITE_TITLE}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Fonts  -->
+    <link rel="preconnect" href="https://rsms.me/" />
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Primary Meta Tags -->
+    <title>{fullTitle}</title>
+    <meta name="title" content={fullTitle} />
+    <meta name="description" content={description} />
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#007c6c" />
+    <meta name="msapplication-TileColor" content="#fffbeb" />
+    <meta name="theme-color" content="#fffbeb" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta
+      property="og:image"
+      content={new URL(cover?.image.src ?? image, Astro.url)}
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:title" content={fullTitle} />
+    <meta property="twitter:description" content={description} />
+    <meta
+      property="twitter:image"
+      content={new URL(cover?.image.src ?? image, Astro.url)}
+    />
+    <slot name="head-after" />
+  </head>
+
+  <body>
+    <LeafHeader title={heading} cover={cover} />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
